@@ -1,0 +1,52 @@
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        int one = s.length()-1;
+        int two = t.length()-1;
+        int count1 = 0;
+        int count2 = 0;
+        char first;
+        char second;
+        while(one >= 0 || two >= 0) {
+            
+            // cout << one << " " << two << "\n";
+            if(one >= 0)    {
+                if(s[one] == '#')   {
+                    one--;
+                    count1++;
+                    continue;
+                }
+                if(count1 != 0) {
+                    one--;
+                    count1--;
+                    continue;
+                }
+                first = s[one];
+            } else{
+                first = '-';
+            }
+            if(two >= 0)    {
+                if(t[two] == '#')   {
+                    two--;
+                    count2++;
+                    continue;
+                }
+                if(count2 != 0) {
+                    two--;
+                    count2--;
+                    continue;
+                }
+                second = t[two];
+            } else{
+                second = '-';
+            }
+            if(first != second) {
+                return false;
+            }
+            one--;
+            two--;
+        }
+        return true;
+    }
+    
+};
