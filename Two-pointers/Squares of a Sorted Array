@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int n = nums.size();
+        int start = n;
+        for(int i = 0; i < n; i++)  {
+            if(nums[i] >= 0)    {
+                start = i;
+                break;
+            }
+        }
+        vector<int> ans;
+        int other = start-1;
+        while(other >= 0 || start < n)  {
+            int left = INT_MAX;
+            int right = INT_MAX;
+            if(other >= 0)  {
+                left = nums[other]*nums[other];
+            }
+            if(start < n)   {
+                right = nums[start]*nums[start];
+            }
+            if(left < right)    {
+                ans.push_back(left);
+                other--;
+            } else {
+                ans.push_back(right);
+                start++;
+            }
+        }
+        return ans;
+    }
+};
