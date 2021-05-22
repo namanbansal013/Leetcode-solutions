@@ -1,0 +1,71 @@
+class Solution {
+public:
+    vector<double> sampleStats(vector<int>& count) {
+        vector<double> ans;
+        double mini = 256;
+        double maxi = 0;
+        double sum = 0;
+        double freq = 0;
+        double mode;
+        long long maxFreq = 0;
+        for(long long i = 0; i <= 255; i++)    {
+            if(count[i] != 0)   {
+                mini = min(mini, (double)i);
+                maxi = max(maxi, (double)i);
+                sum += (i*count[i]);
+                freq += count[i];
+                if(maxFreq < count[i])  {
+                    maxFreq = count[i];
+                    mode = i;
+                }
+            }
+        }
+        double one = 0;
+        double two = 0;
+        double median = 0;
+        long long med1 = freq/2;
+        long long med2;
+        int flag= 0;
+        if((int)freq%2)  {
+            med1++;
+            flag = 1;
+        } else {
+            med2 = med1+1;
+        }
+        for(int i = 0; i <= 255; i++)  {
+            if(flag)   {
+                //odd
+                if(count[i] != 0)   {
+                    med1 -= count[i];
+                    if(med1 <= 0)   {
+                        median = i;
+                        break;
+                    }
+                }
+            } else {
+                //even
+                if(count[i] != 0)   {
+                    med1 -= count[i];
+                    med2 -= count[i];
+                    if(med1 <= 0 && median == 0)   {
+                        median += i;
+                    }
+                    if(med2 <= 0)   {
+                        median += i;
+                        break;
+                    }
+                }
+            }
+        }
+        if(flag == 0)   {
+            median /= 2.0;
+        }
+        double mean = sum/freq;
+        ans.push_back(mini);
+        ans.push_back(maxi);
+        ans.push_back(mean);
+        ans.push_back(median);
+        ans.push_back(mode);
+        return ans;
+    }
+};
